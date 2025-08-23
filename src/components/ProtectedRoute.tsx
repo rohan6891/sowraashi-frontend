@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { Navigate } from 'react-router-dom';
 import { User, Lock } from 'lucide-react';
 
-const API_BASE_URL = import.meta.env.BACKEND_URL || 'http://localhost:5000/api';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface ProtectedRouteProps {
   children: React.ReactNode;
@@ -34,7 +34,7 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole 
 
       try {
         // Verify token with server
-        const response = await fetch('/api/auth/verify', {
+        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
           method: 'GET',
           headers: {
             'Authorization': `Bearer ${token}`,
