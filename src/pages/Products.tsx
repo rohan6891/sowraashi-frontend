@@ -156,7 +156,7 @@ export function Products() {
               
               {/* Product Description */}
               <p className="text-white/80 text-lg mb-6 leading-relaxed">
-                {currentProduct.description || currentProduct.shortDescription}
+                {currentProduct.shortDescription}
               </p>
               
               {/* Product Name as Main Heading */}

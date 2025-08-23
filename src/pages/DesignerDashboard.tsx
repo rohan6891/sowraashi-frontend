@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-// const API_BASE_URL = import.meta.env.BACKEND_URL;
+const API_BASE_URL = import.meta.env.BACKEND_URL;
 
 interface Order {
   _id: string;
@@ -72,7 +72,7 @@ const DesignerDashboard: React.FC = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`http://localhost:5001/api/orders`, {
+      const response = await fetch(`${API_BASE_URL}/api/orders`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -113,7 +113,7 @@ const DesignerDashboard: React.FC = () => {
         deliveryDate: formData.expectedDeliveryDate
       };
 
-      const response = await fetch('/api/orders/custom', {
+      const response = await fetch(`${API_BASE_URL}/api/orders/custom`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
@@ -151,7 +151,7 @@ const DesignerDashboard: React.FC = () => {
   const handlePaymentSuccess = async (orderId: string) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/orders/${orderId}/payment-success`, {
+      const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-success`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',

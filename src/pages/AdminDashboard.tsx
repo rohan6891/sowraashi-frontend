@@ -2,6 +2,9 @@ import React, { useState, useEffect } from 'react';
 import { Upload, X, Edit, Trash2, Eye } from 'lucide-react';
 import { products as existingProducts } from '../data/products';
 
+// Define your API base URL here or import from your config
+const API_BASE_URL = import.meta.env.BACKEND_URL;
+
 interface Product {
   _id: string;
   name: string;
@@ -159,7 +162,7 @@ const AdminDashboard: React.FC = () => {
 
       // Try to fetch products from API
       try {
-        const response = await fetch('/api/products');
+        const response = await fetch(`${API_BASE_URL}/api/products`);
         if (response.ok) {
           const data = await response.json();
           const apiProducts = data.products || [];
@@ -185,7 +188,7 @@ const AdminDashboard: React.FC = () => {
   const fetchOrders = async () => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch('/api/orders', {
+      const response = await fetch(`${API_BASE_URL}/api/orders`, {
         headers: {
           'Authorization': `Bearer ${token}`
         }
@@ -288,7 +291,7 @@ const AdminDashboard: React.FC = () => {
         formData.append('image', selectedImage);
       }
 
-      const url = editingProduct ? `/api/products/${editingProduct._id}` : '/api/products';
+      const url = editingProduct ? `${API_BASE_URL}/api/products/${editingProduct._id}` : `${API_BASE_URL}/api/products`;
       const method = editingProduct ? 'PUT' : 'POST';
       
       const response = await fetch(url, {
@@ -394,7 +397,7 @@ const AdminDashboard: React.FC = () => {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/products/${productId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/products/${productId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
@@ -417,7 +420,7 @@ const AdminDashboard: React.FC = () => {
   const updateOrderStatus = async (orderId: string, status: string) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/orders/${orderId}/status`, {
+      const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/status`, {
         method: 'PATCH',
         headers: {
           'Content-Type': 'application/json',
@@ -444,7 +447,7 @@ const AdminDashboard: React.FC = () => {
     
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`/api/orders/${orderId}`, {
+      const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}`, {
         method: 'DELETE',
         headers: {
           'Authorization': `Bearer ${token}`
