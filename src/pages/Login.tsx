@@ -36,7 +36,7 @@ const Login: React.FC = () => {
     e.preventDefault();
     setLoading(true);
     setError('');
-
+    console.log(API_BASE_URL);
     try {
       const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: 'POST',

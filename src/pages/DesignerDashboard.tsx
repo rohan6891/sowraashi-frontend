@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-const API_BASE_URL = import.meta.env.BACKEND_URL;
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface Order {
   _id: string;

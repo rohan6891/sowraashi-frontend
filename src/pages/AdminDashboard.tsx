@@ -3,7 +3,7 @@ import { Upload, X, Edit, Trash2, Eye } from 'lucide-react';
 import { products as existingProducts } from '../data/products';
 
 // Define your API base URL here or import from your config
-const API_BASE_URL = import.meta.env.BACKEND_URL;
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface Product {
   _id: string;
@@ -122,6 +122,7 @@ const AdminDashboard: React.FC = () => {
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Free Size'];
 
   useEffect(() => {
+    console.log(API_BASE_URL);
     fetchProducts();
     fetchOrders();
   }, []);
