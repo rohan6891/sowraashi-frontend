@@ -8,7 +8,7 @@ interface LoginFormData {
   role: string;
 }
 
-const API_BASE_URL = import.meta.env.BACKEND_URL;
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 const Login: React.FC = () => {
   const [formData, setFormData] = useState<LoginFormData>({
