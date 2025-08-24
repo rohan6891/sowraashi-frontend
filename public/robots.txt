@@ -1,4 +1,4 @@
 User-agent: *
 Allow: /
 
-Sitemap: https://www.greenplanttechnologies.in/sitemap.xml
+Sitemap: https://www.sowraashi.com/sitemap.xml

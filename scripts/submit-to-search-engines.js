@@ -1,7 +1,7 @@
 import { get } from 'https';
 
 // Configuration
-const SITE_URL = 'https://www.greenplanttechnologies.in';
+const SITE_URL = 'https://www.sowraashi.com';
 const SITEMAP_URL = `${SITE_URL}/sitemap.xml`;
 
 // Function to ping search engines

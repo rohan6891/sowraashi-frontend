@@ -8,7 +8,7 @@ const __dirname = dirname(__filename);
 
 // Configuration
 const publicDir = resolve(__dirname, '../public');
-const siteUrl = 'https://www.greenplanttechnologies.in';
+const siteUrl = 'https://www.sowraashi.com';
 
 // Define your routes with last modified dates (update these as needed)
 const routes = [

@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion';
-import { Leaf, Droplets, Shield, Sprout, Zap, FlaskConical } from 'lucide-react';
+import { Crown, Sparkles, Heart, Palette, Star, Gem } from 'lucide-react';
 import { ProductShowcase } from '../components/ProductShowcase';
 import '../assets/background.css';
 
@@ -7,32 +7,32 @@ export function Homepage() {
 
   const features = [
     {
-      icon: Leaf,
+      icon: Crown,
       title: 'Silk Collections',
       description: 'Premium silk sarees that showcase elegance and traditional craftsmanship'
     },
     {
-      icon: Droplets,
+      icon: Sparkles,
       title: 'Designer Wear',
       description: 'Exclusive designer sarees for special occasions and celebrations'
     },
     {
-      icon: Shield,
+      icon: Heart,
       title: 'Quality Assured',
       description: 'Premium quality materials and expert tailoring for perfect fit'
     },
     {
-      icon: Sprout,
+      icon: Palette,
       title: 'Custom Designs',
       description: 'Personalized saree designs tailored to your measurements and preferences'
     },
     {
-      icon: Zap,
+      icon: Star,
       title: 'Bridal Collection',
       description: 'Stunning bridal sarees for your most special day'
     },
     {
-      icon: FlaskConical,
+      icon: Gem,
       title: 'Party Wear',
       description: 'Glamorous party wear sarees for social gatherings and events'
     }
