@@ -12,6 +12,13 @@ export function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
 
+    const navigationLinks = [
+    { to: "/about", label: "About" },
+    { to: "/products", label: "Products" },
+    { to: "/services", label: "Services" },
+    { to: "/contact", label: "Contact" }
+  ];
+
   // 🔹 Extracted function so we can call it from multiple places
   const checkAuthStatus = async () => {
     const storedUser = localStorage.getItem('user');
