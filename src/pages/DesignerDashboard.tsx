@@ -482,7 +482,7 @@ const DesignerDashboard: React.FC = () => {
                         <div className="text-sm font-medium text-white capitalize">{order.paymentMethod}</div>
                         {order.paymentMethod === 'online' && order.paymentStatus === 'pending' && (
                           <div className="mt-2">
-                            <img src=`${API_BASE_URL}/uploads/qr.png` alt="QR Code" className="w-16 h-16 mx-auto object-contain" />
+                            <img src={`${API_BASE_URL}/uploads/qr.png`} alt="QR Code" className="w-16 h-16 mx-auto object-contain" />
                             <p className="text-xs text-gray-400 text-center mt-1">Scan to pay</p>
                           </div>
                         )}
@@ -546,7 +546,7 @@ const DesignerDashboard: React.FC = () => {
                 </h3>
                 <div className="mb-6">
                    <img 
-                     src=`${API_BASE_URL}/uploads/qr.png` 
+                     src={`${API_BASE_URL}/uploads/qr.png`} 
                      alt="Payment QR Code" 
                      className="w-48 h-48 mx-auto border-2 border-gray-200 rounded-lg object-contain"
                    />
