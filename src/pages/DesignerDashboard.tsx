@@ -84,7 +84,6 @@ const DesignerDashboard: React.FC = () => {
       });
       if (response.ok) {
         const data = await response.json();
-        console.log(data);
         setOrders(data.orders || []);
       }
     } catch (error) {
