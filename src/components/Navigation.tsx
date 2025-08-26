@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Home, User, LogOut, Settings, ShoppingBag, Heart } from 'lucide-react';
+import { Menu, X, Home, User, LogOut, Settings, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
@@ -12,67 +12,66 @@ export function Navigation() {
   const location = useLocation();
   const navigate = useNavigate();
 
+  // 🔹 Extracted function so we can call it from multiple places
+  const checkAuthStatus = async () => {
+    const storedUser = localStorage.getItem('user');
+    const token = localStorage.getItem('token');
+    
+    if (storedUser && token) {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
+          method: 'GET',
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
+        
+        if (response.ok) {
+          const data = await response.json();
+          setUser(data.user);
+        } else {
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          setUser(null);
+        }
+      } catch (error) {
+        console.error('Token validation error:', error);
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setUser(null);
+      }
+    } else {
+      setUser(null);
+    }
+  };
+
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 20);
-    };
+    const handleScroll = () => setIsScrolled(window.scrollY > 20);
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
 
   useEffect(() => {
-    // Check for stored user data and validate token
-    const checkAuthStatus = async () => {
-      const storedUser = localStorage.getItem('user');
-      const token = localStorage.getItem('token');
-      
-      if (storedUser && token) {
-        try {
-          // Validate token with server
-          const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
-            method: 'GET',
-            headers: {
-              'Authorization': `Bearer ${token}`
-            }
-          });
-          
-          if (response.ok) {
-            const data = await response.json();
-            setUser(data.user);
-          } else {
-            // Token is invalid, clear storage
-            localStorage.removeItem('token');
-            localStorage.removeItem('user');
-            setUser(null);
-          }
-        } catch (error) {
-          console.error('Token validation error:', error);
-          // For security, clear authentication on network errors
-          localStorage.removeItem('token');
-          localStorage.removeItem('user');
-          setUser(null);
-        }
-      }
-    };
-    
+    // Run once on mount
     checkAuthStatus();
+
+    // 🔹 Listen for login/logout changes
+    const handler = () => checkAuthStatus();
+    window.addEventListener("authChanged", handler);
+
+    return () => window.removeEventListener("authChanged", handler);
   }, []);
 
   useEffect(() => {
     setIsOpen(false);
   }, [location]);
 
-  const navigationLinks = [
-    { to: '/products', label: 'Products' },
-    { to: '/favorites', label: 'Favorites' },
-    { to: '/about', label: 'About Us' },
-    { to: '/contact', label: 'Contact' },
-  ];
-
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
     setUser(null);
+    // 🔹 Notify all components about logout
+    window.dispatchEvent(new Event("authChanged"));
     navigate('/');
   };
 
