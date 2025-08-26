@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, X, Edit, Trash2, Eye } from 'lucide-react';
+import { Upload, X, Edit, Trash2, Eye, Settings as SettingsIcon } from 'lucide-react';
 import { products as existingProducts } from '../data/products';
+import Settings from '../components/Settings';
 
 // Define your API base URL here or import from your config
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
@@ -94,6 +95,7 @@ const AdminDashboard: React.FC = () => {
   const [selectedOrder, setSelectedOrder] = useState<Order | null>(null);
   const [showQRCode, setShowQRCode] = useState(false);
   const [currentQROrder, setCurrentQROrder] = useState<Order | null>(null);
+  const [showSettings, setShowSettings] = useState(false);
   
   const [productFormData, setProductFormData] = useState<ProductFormData>({
     name: '',
@@ -471,7 +473,16 @@ const AdminDashboard: React.FC = () => {
   return (
     <div className="min-h-screen bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-8">Admin Dashboard</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
+          <button
+            onClick={() => setShowSettings(true)}
+            className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+            title="Settings"
+          >
+            <SettingsIcon className="w-6 h-6" />
+          </button>
+        </div>
         
         {/* Tab Navigation */}
         <div className="flex space-x-1 bg-gray-800 p-1 rounded-lg mb-8 w-fit">
@@ -548,7 +559,7 @@ const AdminDashboard: React.FC = () => {
                           {imagePreview && (
                             <div className="w-20 h-20 border border-gray-300 rounded-md overflow-hidden">
                               <img
-                                src={imagePreview}
+                                src={imagePreview.startsWith('http') || imagePreview.startsWith('/uploads') ? (imagePreview.startsWith('http') ? imagePreview : `${API_BASE_URL}${imagePreview}`) : imagePreview}
                                 alt="Preview"
                                 className="w-full h-full object-cover"
                               />
@@ -865,9 +876,13 @@ const AdminDashboard: React.FC = () => {
                           <div className="flex items-center">
                             <div className="w-12 h-12 rounded-md overflow-hidden mr-4">
                               <img
-                                src={product.image}
+                                src={product.image.startsWith('/uploads/') ? `${API_BASE_URL}${product.image}` : product.image}
                                 alt={product.name}
                                 className="w-full h-full object-cover"
+                                onError={(e) => {
+                                  const target = e.target as HTMLImageElement;
+                                  target.src = 'https://via.placeholder.com/48x48/10b981/ffffff?text=No+Image';
+                                }}
                               />
                             </div>
                             <div>
@@ -1201,6 +1216,11 @@ const AdminDashboard: React.FC = () => {
               </div>
             </div>
           </div>
+        )}
+
+        {/* Settings Modal */}
+        {showSettings && (
+          <Settings onClose={() => setShowSettings(false)} />
         )}
       </div>
     </div>

@@ -9,13 +9,15 @@ interface Product {
   image: string;
 }
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 const products: Product[] = [
-  { id: 'silk-saree-1', name: 'Elegant Silk Saree', image: '/uploads/1.png' },
-  { id: 'designer-saree-2', name: 'Cotton Comfort Saree', image: '/uploads/2.png' },
-  { id: 'cotton-saree-3', name: 'Designer Collection', image: '/uploads/3.png' },
-  { id: 'bridal-saree-4', name: 'Bridal Special', image: '/uploads/4.png' },
-  { id: 'party-saree-5', name: 'Party Wear Saree', image: '/uploads/5.png' },
-  { id: 'casual-saree-6', name: 'Casual Elegance', image: '/uploads/6.png' },
+  { id: 'silk-saree-1', name: 'Elegant Silk Saree', image: `${API_BASE_URL}/uploads/1.png` },
+  { id: 'designer-saree-2', name: 'Cotton Comfort Saree', image: `${API_BASE_URL}/uploads/2.png` },
+  { id: 'cotton-saree-3', name: 'Designer Collection', image: `${API_BASE_URL}/uploads/3.png` },
+  { id: 'bridal-saree-4', name: 'Bridal Special', image: `${API_BASE_URL}/uploads/4.png` },
+  { id: 'party-saree-5', name: 'Party Wear Saree', image: `${API_BASE_URL}/uploads/5.png` },
+  { id: 'casual-saree-6', name: 'Casual Elegance', image: `${API_BASE_URL}/uploads/6.png` },
 ];
 
 export function ProductShowcase() {
@@ -182,7 +184,7 @@ export function ProductShowcase() {
                     transition={{ duration: 0.3 }}
                   >
                     <Link 
-                      to={`/products/${createSlug(product.name)}`}
+                      to={`/products/${product.id}`}
                       className={`
                         block relative w-72 h-80 rounded-2xl overflow-hidden shadow-2xl mx-auto group cursor-pointer
                         ${isCenter ? 'ring-4 ring-yellow-500/50 dark:ring-yellow-400/50' : ''}

@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import { Settings as SettingsIcon } from 'lucide-react';
+import Settings from '../components/Settings';
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface Order {
@@ -48,6 +50,9 @@ interface FormData {
 const DesignerDashboard: React.FC = () => {
   const [activeTab, setActiveTab] = useState<'new-order' | 'orders'>('new-order');
   const [orders, setOrders] = useState<Order[]>([]);
+  const [showSettings, setShowSettings] = useState(false);
+  const [showQRModal, setShowQRModal] = useState(false);
+  const [pendingOrderData, setPendingOrderData] = useState<any>(null);
 
   const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState<FormData>({
@@ -97,20 +102,33 @@ const DesignerDashboard: React.FC = () => {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // If payment method is online, show QR modal first
+    if (formData.paymentMethod === 'online') {
+      setPendingOrderData(formData);
+      setShowQRModal(true);
+      return;
+    }
+    
+    // For cash payments, submit directly
+    await submitOrder(formData);
+  };
+
+  const submitOrder = async (orderData: any) => {
     setLoading(true);
 
     try {
       const submitData = {
-        name: formData.customerName,
-        mobile: formData.customerPhone,
-        designDescription: formData.design,
-        measurements: formData.measurements,
-        totalBill: formData.amount,
-        advancePayment: formData.advanceAmount,
-        paymentMethod: formData.paymentMethod,
-        paymentStatus: formData.paymentStatus,
-        presentDate: formData.presentDate,
-        deliveryDate: formData.expectedDeliveryDate
+        name: orderData.customerName,
+        mobile: orderData.customerPhone,
+        designDescription: orderData.design,
+        measurements: orderData.measurements,
+        totalBill: orderData.amount,
+        advancePayment: orderData.advanceAmount,
+        paymentMethod: orderData.paymentMethod,
+        paymentStatus: orderData.paymentStatus,
+        presentDate: orderData.presentDate,
+        deliveryDate: orderData.expectedDeliveryDate
       };
 
       const response = await fetch(`${API_BASE_URL}/api/orders/custom`, {
@@ -136,6 +154,8 @@ const DesignerDashboard: React.FC = () => {
           expectedDeliveryDate: ''
         });
         fetchOrders();
+        setShowQRModal(false);
+        setPendingOrderData(null);
       } else {
         const error = await response.json();
         alert(`Error: ${error.message}`);
@@ -148,36 +168,57 @@ const DesignerDashboard: React.FC = () => {
     }
   };
 
-  const handlePaymentSuccess = async (orderId: string) => {
-    try {
-      const token = localStorage.getItem('token');
-      const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-success`, {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${token}`
-        },
-        body: JSON.stringify({
-          paymentStatus: 'paymentSuccessful'
-        })
-      });
+  const handlePaymentSuccess = async (orderId?: string) => {
+    if (orderId) {
+      // For existing orders
+      try {
+        const token = localStorage.getItem('token');
+        const response = await fetch(`${API_BASE_URL}/api/orders/${orderId}/payment-success`, {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${token}`
+          },
+          body: JSON.stringify({
+            paymentStatus: 'paymentSuccessful'
+          })
+        });
 
-      if (response.ok) {
-        alert('Payment marked as successful!');
-        fetchOrders();
-      } else {
+        if (response.ok) {
+          alert('Payment marked as successful!');
+          fetchOrders();
+        } else {
+          alert('Error updating payment status');
+        }
+      } catch (error) {
+        console.error('Error updating payment status:', error);
         alert('Error updating payment status');
       }
-    } catch (error) {
-      console.error('Error updating payment status:', error);
-      alert('Error updating payment status');
+    } else {
+      // For new orders from QR modal
+      if (pendingOrderData) {
+        const updatedOrderData = {
+          ...pendingOrderData,
+          paymentStatus: 'paid'
+        };
+        await submitOrder(updatedOrderData);
+      }
     }
   };
 
   return (
     <div className="min-h-screen bg-gray-900 p-6">
       <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold text-white mb-8">Designer Dashboard</h1>
+        <div className="flex justify-between items-center mb-8">
+          <h1 className="text-3xl font-bold text-white">Designer Dashboard</h1>
+          <button
+            onClick={() => setShowSettings(true)}
+            className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
+            title="Settings"
+          >
+            <SettingsIcon size={24} />
+          </button>
+        </div>
         
         {/* Tab Navigation */}
         <div className="flex space-x-1 bg-gray-800 p-1 rounded-lg mb-8 w-fit">
@@ -441,7 +482,7 @@ const DesignerDashboard: React.FC = () => {
                         <div className="text-sm font-medium text-white capitalize">{order.paymentMethod}</div>
                         {order.paymentMethod === 'online' && order.paymentStatus === 'pending' && (
                           <div className="mt-2">
-                            <img src="/uploads/qr.png" alt="QR Code" className="w-16 h-16 mx-auto" />
+                            <img src="http://localhost:5001/uploads/qr.png" alt="QR Code" className="w-16 h-16 mx-auto object-contain" />
                             <p className="text-xs text-gray-400 text-center mt-1">Scan to pay</p>
                           </div>
                         )}
@@ -486,6 +527,60 @@ const DesignerDashboard: React.FC = () => {
                   <p className="text-gray-300">No orders found</p>
                 </div>
               )}
+            </div>
+          </div>
+        )}
+
+        {/* Settings Modal */}
+        {showSettings && (
+          <Settings onClose={() => setShowSettings(false)} />
+        )}
+
+        {/* QR Payment Modal */}
+        {showQRModal && (
+          <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+            <div className="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+              <div className="text-center">
+                <h3 className="text-xl font-semibold text-gray-900 mb-4">
+                  Scan QR Code to Pay
+                </h3>
+                <div className="mb-6">
+                   <img 
+                     src="http://localhost:5001/uploads/qr.png" 
+                     alt="Payment QR Code" 
+                     className="w-48 h-48 mx-auto border-2 border-gray-200 rounded-lg object-contain"
+                   />
+                 </div>
+                <div className="mb-6">
+                  <p className="text-gray-600 mb-2">
+                    Amount to Pay: <span className="font-semibold text-lg">₹{pendingOrderData?.amount}</span>
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Customer: {pendingOrderData?.customerName}
+                  </p>
+                  <p className="text-sm text-gray-500">
+                    Mobile: {pendingOrderData?.customerPhone}
+                  </p>
+                </div>
+                <div className="flex space-x-4">
+                  <button
+                    onClick={() => {
+                      setShowQRModal(false);
+                      setPendingOrderData(null);
+                    }}
+                    className="flex-1 px-4 py-2 border border-gray-300 rounded-md text-gray-700 hover:bg-gray-50 transition-colors"
+                  >
+                    Cancel
+                  </button>
+                  <button
+                    onClick={() => handlePaymentSuccess()}
+                    className="flex-1 px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700 transition-colors"
+                    disabled={loading}
+                  >
+                    {loading ? 'Processing...' : 'Payment Successful'}
+                  </button>
+                </div>
+              </div>
             </div>
           </div>
         )}

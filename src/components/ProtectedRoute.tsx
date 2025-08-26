@@ -61,18 +61,11 @@ const ProtectedRoute: React.FC<ProtectedRouteProps> = ({ children, requiredRole 
         }
       } catch (error) {
         console.error('Authentication check failed:', error);
-        // On network error, try to use stored user data
-        try {
-          const userData = JSON.parse(storedUser);
-          if (requiredRole && userData.role !== requiredRole) {
-            setIsAuthenticated(false);
-          } else {
-            setIsAuthenticated(true);
-            setUser(userData);
-          }
-        } catch {
-          setIsAuthenticated(false);
-        }
+        // For security, always require fresh authentication for admin/designer roles
+        // Clear stored data and require re-login
+        localStorage.removeItem('token');
+        localStorage.removeItem('user');
+        setIsAuthenticated(false);
       } finally {
         setIsLoading(false);
       }

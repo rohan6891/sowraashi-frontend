@@ -1,3 +1,7 @@
+// For static product images, use relative paths from public directory
+// For dynamically uploaded images, use API_BASE_URL
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:5001';
+
 export interface Product {
   id: string;
   name: string;
@@ -19,7 +23,7 @@ export const products: Product[] = [
     id: 'silk-saree-1',
     name: 'Premium Silk Saree',
     category: 'silk',
-    image: '/uploads/1.png',
+    image: `${API_BASE_URL}/uploads/1.png`,
     shortDescription: 'Elegant silk saree with traditional patterns and rich colors',
     fullDescription: `PREMIUM SILK SAREE COLLECTION:
 Exquisite handwoven silk saree featuring traditional motifs and vibrant colors. Perfect for special occasions and celebrations. Made from pure silk with intricate border designs and matching blouse piece.
@@ -42,7 +46,7 @@ FEATURES:
     id: 'designer-saree-2',
     name: 'Designer Collection Saree',
     category: 'designer',
-    image: '/uploads/2.png',
+    image: `${API_BASE_URL}/uploads/2.png`,
     shortDescription: 'Contemporary designer saree with modern patterns and elegant finish',
     fullDescription: `DESIGNER COLLECTION SAREE:
 Stunning designer saree crafted with modern aesthetics and contemporary patterns. Features unique color combinations and innovative design elements. Perfect for parties and social gatherings.
@@ -65,7 +69,7 @@ FEATURES:
     id: 'bridal-saree-3',
     name: 'Bridal Special Saree',
     category: 'bridal',
-    image: '/uploads/3.png',
+    image: `${API_BASE_URL}/uploads/3.png`,
     shortDescription: 'Luxurious bridal saree with heavy embroidery and golden work',
     fullDescription: `BRIDAL SPECIAL SAREE:
 Magnificent bridal saree designed for your most special day. Features heavy embroidery work, golden threads, and luxurious fabric. Comes with matching accessories and designer blouse.
@@ -88,7 +92,7 @@ FEATURES:
     id: 'cotton-saree-4',
     name: 'Pure Cotton Saree',
     category: 'cotton',
-    image: '/uploads/4.png',
+    image: `${API_BASE_URL}/uploads/4.png`,
     shortDescription: 'Comfortable cotton saree perfect for daily wear and casual occasions',
     fullDescription: `PURE COTTON SAREE:
 Comfortable and breathable cotton saree ideal for daily wear. Features simple yet elegant patterns with soft colors. Perfect for office wear and casual occasions.
@@ -111,7 +115,7 @@ FEATURES:
     id: 'party-saree-5',
     name: 'Party Wear Saree',
     category: 'party',
-    image: '/uploads/5.png',
+    image: `${API_BASE_URL}/uploads/5.png`,
     shortDescription: 'Glamorous party wear saree with shimmer and contemporary design',
     fullDescription: `PARTY WEAR SAREE:
 Glamorous saree designed for parties and social events. Features shimmer work, contemporary patterns, and vibrant colors. Perfect for making a style statement.
@@ -134,7 +138,7 @@ FEATURES:
     id: 'casual-saree-6',
     name: 'Casual Elegant Saree',
     category: 'casual',
-    image: '/uploads/6.png',
+    image: `${API_BASE_URL}/uploads/6.png`,
     shortDescription: 'Elegant casual saree suitable for various occasions and comfortable wear',
     fullDescription: `CASUAL ELEGANT SAREE:
 Versatile saree perfect for various occasions. Combines comfort with elegance, featuring subtle patterns and pleasant colors. Ideal for both casual and semi-formal events.
@@ -157,7 +161,7 @@ FEATURES:
     id: 'greengro',
     name: 'GREENGRO',
     category: 'liquids',
-    image: '/uploads/GREENGRO.png',
+    image: '/uploads/7.png',
     shortDescription: 'Premium organic growth enhancer for sustainable agriculture',
     fullDescription: `BENEFIT OF GREENGRO:
 As liquid fertilizers highly soluble and easily available. Quick response from nitrate, longer lasting from ammonical and sustained feeding from the water- soluble nitrogen in urea. More uniform application, precise dosage of distribution over the area. Solution is rapidly available to plants for a longer period during its growth. Compatible with other fertilizers.
@@ -180,7 +184,7 @@ Urea Ammonium Nitrate(32%) (Liquid)`,
     id: 'x-spa80',
     name: 'X-SPA80',
     category: 'liquids',
-    image: '/uploads/X-SPA80.png',
+    image: '/uploads/8.png',
     shortDescription: 'nonionic spray adjuvants',
     fullDescription: `BENEFIT OF X-SPA80:
 X-spa80 is highly concentrated nonionic wetting agent with 80% active ingredients. As an Sticker - Activator - Spreader, it activates the spray fluid to moisten the plant surface and allows uniform spreading of spray deposits. powerful tool in irrigation with improves the water absorption in soil, it facilitates uniform mixing of powders, pesticides & most liquid fertilizers, it is non corrosive to spray equipment and prevents clogged nozzles. Safe & environment friendly.
@@ -199,7 +203,7 @@ RECOMMENDED DOSAGE:
     id: 'silicron',
     name: 'Silicron',
     category: 'liquids',
-    image: '/uploads/silicron.png',
+    image: '/uploads/9.png',
     shortDescription: 'nonionic spray adjuvants',
     fullDescription: `BENEFIT OF SILICRON:
 1. Super spreading: acti-silion solution spreads quickly, carrying insecticides into pests and carrying fungicides on those crop canopy, prone to infection by diseases. it assist herbicides to kill weeds uniformly in shorter duration
@@ -221,7 +225,7 @@ Silicone Based Super Spreader`,
     id: 'swarna',
     name: 'Swarna',
     category: 'liquids',
-    image: '/uploads/swarna.png',
+    image: '/uploads/1.png',
     shortDescription: 'N.P Complex Fertilizer',
     fullDescription: `BENEFIT OF SWARNA:
 Bio availability of N&P nutrients are higher. Excellent liquid phosphatic fertilizer. Suitable for foliar and root application. Can be mixed with other agrochemicals other than Copper, Zinc, Sulphate based compounds.
@@ -244,7 +248,7 @@ Ammonium Poly-phosphate (10-34-0) (Liquid)`,
     id: 'wake-up',
     name: 'Wake Up',
     category: 'liquids',
-    image: '/uploads/wake up.png',
+    image: '/uploads/2.png',
     shortDescription: 'nature biostimulants',
     fullDescription: `BENEFIT OF WAKE UP:
 Wake up contains organic constituents like humic, humates & Fulvic acids supported by naturally containing essential trace elements. Humic acids are reported to increase permeability of plant membranes, resulting in higher metabolic activity due to increased nutrient's availability & enzyme activity.
@@ -267,7 +271,7 @@ Humates and Fulvates-22% (Liquid)`,
     id: 'rich-roots',
     name: 'Rich Roots',
     category: 'liquids',
-    image: '/uploads/rich roots.png',
+    image: '/uploads/3.png',
     shortDescription: 'nature biostimulants',
     fullDescription: `BENEFIT OF RICH ROOTS:
 1. Rich Roots contains organic constituents like humic, humates and Fulvic acids supported by naturally containing essential trace elements. Humic acids are reported to permeability of plant membranes, resulting in higher metabolic activity due to increased nutrient's availability and enzyme activity.
@@ -292,7 +296,7 @@ Humates 12.5% (Liquid)`,
     id: 'lasya',
     name: 'Lasya',
     category: 'liquids',
-    image: '/uploads/lasya.png',
+    image: '/uploads/4.png',
     shortDescription: 'nature biostimulants',
     fullDescription: `BENEFIT OF LASYA:
 Improves photosynthesis in plants & entire plant will become greenish. It will help to overcome micronutrient deficiency in all crop. Repeated application with 15-20 days interval will keep crop Healthy Better growth. Improves disease resistance in all crops.
@@ -315,7 +319,7 @@ Organic botanical extract- 10%`,
     id: 'root-booster',
     name: 'Root Booster',
     category: 'powder',
-    image: '/uploads/Root Booster.png',
+    image: '/uploads/5.png',
     shortDescription: 'nature biostimulants',
     fullDescription: `BENEFIT OF ROOT BOOSTER:
 Improves physical, chemical and biological properties of soil. increases aeration and water holding capacity of soil. improves effectiveness of metallic fungicides.
@@ -337,7 +341,7 @@ Potassium Humate 49% (Powder)`,
     id: 'jeevan-plus',
     name: 'JEEVAN PLUS',
     category: 'liquids',
-    image: '/uploads/JEEVAN PLUS.png',
+    image: '/uploads/6.png',
     shortDescription: 'nature biostimulants',
     fullDescription: `BENEFIT OF JEEVAN PLUS:
 1. Jeevan Plus contains organic constituents like humic, humates and Fulvic acids supported by naturally containing essential trace elements. Humic acids are reported to permeability of plant membranes, resulting in higher metabolic activity due to increased nutrient's availability and enzyme activity.
@@ -362,7 +366,7 @@ Humates 12.5% (Liquid)`,
     id: 'g-bor',
     name: 'G-BOR',
     category: 'powder',
-    image: '/uploads/G-BOR.png',
+    image: '/uploads/7.png',
     shortDescription: 'Micronutrients',
     fullDescription: `BENEFIT OF G-BOR:
 1. It Play Vital Role in Proper Development of Roots and Shoots.
@@ -387,7 +391,7 @@ BORON 20%`,
     id: 'combi-pro',
     name: 'Combi Pro',
     category: 'powder',
-    image: '/uploads/combi pro.png',
+    image: '/uploads/8.png',
     shortDescription: 'Micronutrient Mixture Fertilizers',
     fullDescription: `BENEFIT OF COMBI PRO:
 1. Combi Pro is 100% water soluble formulation containing microelements in chelated form those are needed by crops. these vital nutrients are in readily available form.
@@ -414,7 +418,7 @@ Zn-3.0%. Fe-2.0%. Mn-1.0%. B-0.5%`,
     id: 'sparsha',
     name: 'Sparsha',
     category: 'powder',
-    image: '/uploads/sparsha.png',
+    image: '/uploads/9.png',
     shortDescription: 'Micronutrients',
     fullDescription: `BENEFIT OF SPARSHA:
 1. Zinc in far more effective than Zinc Sulphate so far as uptake is concerned.
@@ -446,7 +450,7 @@ CHELATED ZINC AS ZN-EDTA (12%Zn)`,
     id: 'shine-citrus',
     name: 'Shine Citrus',
     category: 'liquids',
-    image: '/uploads/shine citrus.png',
+    image: '/uploads/1.png',
     shortDescription: 'Micronutrient Mixture Fertilizers',
     fullDescription: `BENEFIT OF SHINE CITRUS:
 1. Shine Citrus will help better utilisation of major nutrients.
@@ -472,7 +476,7 @@ Zn-3.0%. Fe-05%. B-0.5%.`,
     id: 'micro',
     name: 'Micro',
     category: 'liquids',
-    image: '/uploads/micro.png',
+    image: '/uploads/2.png',
     shortDescription: 'Micronutrient Mixture Fertilizers',
     fullDescription: `BENEFIT OF MICRO STAR:
 1. MICRO STAR will help better utilisation of major nutrients.
@@ -498,7 +502,7 @@ Zn-3.0%.Fe-2.0%. B-1.0%.`,
     id: 'mango-king',
     name: 'Mango King',
     category: 'liquids',
-    image: '/uploads/mango king.png',
+    image: '/uploads/3.png',
     shortDescription: 'Micronutrient Mixture Fertilizers',
     fullDescription: `BENEFIT OF MANGO KING:
 1. Better utilization of major nutrients.
@@ -526,7 +530,7 @@ B-0.5% (Boron)`,
     id: 'green-pro',
     name: 'Green Pro',
     category: 'liquids',
-    image: '/uploads/green pro.png',
+    image: '/uploads/4.png',
     shortDescription: 'straight nitrogenous fertilizer',
     fullDescription: `BENEFIT OF GREEN PRO:
 1. Green Pro will help better utilisation of major nutrients.
@@ -551,7 +555,7 @@ Zn-3.0%, Fe-1.5%, B-0.5%.`,
     id: 'green-care',
     name: 'Green Care',
     category: 'liquids',
-    image: '/uploads/green care.png',
+    image: '/uploads/5.png',
     shortDescription: 'Micronutrient Mixture Fertilizers',
     fullDescription: `BENEFIT OF GREEN CARE:
 1. Green Care will help better utilisation of major nutrients.
@@ -577,7 +581,7 @@ Zn-3.0%. Fe-0.5%. Mn-0.2%. B-0.5%.`,
     id: 'melon-soil',
     name: 'Melon Soil',
     category: 'powder',
-    image: '/uploads/melon soil.png',
+    image: '/uploads/6.png',
     shortDescription: 'Micronutrient Mixture Fertilizers',
     fullDescription: `BENEFIT OF MELON SOIL +:
 1. Improves photosynthesis in plants and entire plants will become greenish.
@@ -604,7 +608,7 @@ Zn-10.0%. Fe-5.0%. Mn-2.0%. B-0.3%.`,
     id: 'sun-shine',
     name: 'Sun Shine',
     category: 'liquids',
-    image: '/uploads/sun sgine.png',
+    image: '/uploads/7.png',
     shortDescription: 'Micronutrient Mixture Fertilizers',
     fullDescription: `BENEFIT OF SUN SHINE:
 1. Sun Shine will help better utilisation of major nutrients.
@@ -630,7 +634,7 @@ Zn-3.0%. B-0.5%.`,
     id: 'melon-plus',
     name: 'Melon Plus',
     category: 'liquids',
-    image: '/uploads/melon plus.png',
+    image: '/uploads/8.png',
     shortDescription: 'Micronutrient Mixture Fertilizers',
     fullDescription: `BENEFIT OF MELON PLUS:
 1. Improves photosynthesis in plants and entire plants will become greenish.
@@ -658,7 +662,7 @@ Zn-3.0%, Fe-2.0%, Mn-1.0%, B-0.5%`,
     id: 'super-grow',
     name: 'Super Grow',
     category: 'liquids',
-    image: '/uploads/super grow.png',
+    image: '/uploads/9.png',
     shortDescription: 'nature biostimulants',
     fullDescription: `BENEFIT OF SUPER GROW:
 Super Grow contains organic constituents like humic, humates & Fulvic acids supported by naturally containing essential trace elements. Humic acids are reported to increase permeability of plant membranes, resulting in higher metabolic activity due to increased nutrient's availability & enzyme activity.

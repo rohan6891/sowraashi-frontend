@@ -1,12 +1,96 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Download, Star, Shield, Leaf, CheckCircle, Info } from 'lucide-react';
 import { products } from '../data/products';
 
+interface AdminProduct {
+  _id: string;
+  name: string;
+  category: string;
+  image: string;
+  shortDescription: string;
+  fullDescription: string;
+  features: string[];
+  price: number;
+  originalPrice?: number;
+  discount: number;
+  inStock: boolean;
+  sizes: string[];
+  colors: string[];
+  material: string;
+  blouseLength?: string;
+  sareeLength?: string;
+  careInstructions: string[];
+  tags: string[];
+  rating: number;
+  reviewCount: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
 export function ProductDetail() {
   const { id } = useParams();
-  const product = products.find(p => p.id === id);
+  const [adminProducts, setAdminProducts] = useState<AdminProduct[]>([]);
+  const [loading, setLoading] = useState(true);
+  
+  // Fetch admin products from API
+  useEffect(() => {
+    const fetchAdminProducts = async () => {
+      try {
+        const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+        const response = await fetch(`${API_BASE_URL}/api/products`);
+        if (response.ok) {
+          const data = await response.json();
+          setAdminProducts(data.products || []);
+        }
+      } catch (error) {
+        console.error('Error fetching admin products:', error);
+      } finally {
+        setLoading(false);
+      }
+    };
+    
+    fetchAdminProducts();
+  }, []);
+  
+  // First try to find in static products
+  let product = products.find(p => p.id === id);
+  
+  // If not found in static products, try to find in admin products
+  if (!product && !loading) {
+    const adminProduct = adminProducts.find(p => p._id === id);
+    if (adminProduct) {
+      const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+      // Convert admin product to match the expected product format
+      product = {
+        id: adminProduct._id,
+        name: adminProduct.name,
+        category: adminProduct.category as any,
+        image: `${API_BASE_URL}${adminProduct.image}`,
+        shortDescription: adminProduct.shortDescription,
+        fullDescription: adminProduct.fullDescription,
+        features: adminProduct.features,
+        usage: [],
+        ingredients: [],
+        safetyTips: adminProduct.careInstructions,
+        price: `₹${adminProduct.price}`,
+        inStock: adminProduct.inStock,
+        application: adminProduct.material
+      };
+    }
+  }
+  
+  if (loading) {
+    return (
+      <div className="min-h-screen pt-16 flex items-center justify-center bg-gray-50 dark:bg-slate-900">
+        <div className="text-center">
+          <div className="animate-spin rounded-full h-12 w-12 border-b-2 border-green-600 mx-auto mb-4"></div>
+          <p className="text-gray-600 dark:text-gray-400">Loading product details...</p>
+        </div>
+      </div>
+    );
+  }
 
   if (!product) {
     return (
@@ -93,6 +177,17 @@ export function ProductDetail() {
                   {product.fullDescription}
                 </div>
               </div>
+            </div>
+
+            {/* Health Check Button */}
+            <div className="pt-4">
+              <Link
+                to="/contact"
+                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
+              >
+                <Shield className="w-5 h-5 mr-2" />
+                Health Check
+              </Link>
             </div>
 
 

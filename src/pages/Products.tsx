@@ -40,22 +40,27 @@ export function Products() {
   const [newlyAddedProducts, setNewlyAddedProducts] = useState<AdminProduct[]>([]);
   const [allProducts, setAllProducts] = useState(products);
 
-  // Fetch newly added products from admin dashboard
+  // Fetch newly added products from backend API
   const fetchNewlyAddedProducts = async () => {
     try {
-      // Get products from localStorage that were added through admin dashboard
-      const adminProducts = JSON.parse(localStorage.getItem('adminProducts') || '[]') as AdminProduct[];
+      const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+      const response = await fetch(`${API_BASE_URL}/api/products`);
       
-      // Filter products added in the last 30 days
-      const thirtyDaysAgo = new Date();
-      thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
-      
-      const recentProducts = adminProducts.filter(product => {
-        const createdDate = new Date(product.createdAt);
-        return createdDate > thirtyDaysAgo;
-      });
-      
-      setNewlyAddedProducts(recentProducts);
+      if (response.ok) {
+        const data = await response.json();
+        const adminProducts = data.products as AdminProduct[];
+        
+        // Filter products added in the last 30 days
+        const thirtyDaysAgo = new Date();
+        thirtyDaysAgo.setDate(thirtyDaysAgo.getDate() - 30);
+        
+        const recentProducts = adminProducts.filter(product => {
+          const createdDate = new Date(product.createdAt);
+          return createdDate > thirtyDaysAgo;
+        });
+        
+        setNewlyAddedProducts(recentProducts);
+      }
     } catch (error) {
       console.error('Error fetching newly added products:', error);
     }
@@ -67,23 +72,27 @@ export function Products() {
   );
   
   // Convert newly added products to match the existing product format
-  const convertedNewProducts = newlyAddedProducts.map(adminProduct => ({
-    id: adminProduct._id,
-    name: adminProduct.name,
-    category: adminProduct.category as any,
-    image: adminProduct.image,
-    shortDescription: adminProduct.shortDescription,
-    fullDescription: adminProduct.fullDescription,
-    features: adminProduct.features,
-    usage: [],
-    ingredients: [],
-    safetyTips: adminProduct.careInstructions,
-    price: `₹${adminProduct.price}`,
-    inStock: adminProduct.inStock,
-    application: adminProduct.material
-  }));
+  const convertedNewProducts = newlyAddedProducts.map(adminProduct => {
+    const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+    return {
+      id: adminProduct._id,
+      name: adminProduct.name,
+      category: adminProduct.category as any,
+      image: `${API_BASE_URL}${adminProduct.image}`,
+      shortDescription: adminProduct.shortDescription,
+      fullDescription: adminProduct.fullDescription,
+      features: adminProduct.features,
+      usage: [],
+      ingredients: [],
+      safetyTips: adminProduct.careInstructions,
+      price: `₹${adminProduct.price}`,
+      inStock: adminProduct.inStock,
+      application: adminProduct.material
+    };
+  });
   
-  const filteredProducts = [...existingSareeProducts, ...convertedNewProducts];
+  // Sort products to show newly added products at the top
+  const filteredProducts = [...convertedNewProducts, ...existingSareeProducts];
 
   const currentProduct = filteredProducts[currentProductIndex] || products[0];
 
@@ -350,7 +359,7 @@ export function Products() {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={product.image}
+                    src={product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_BACKEND_URL}${product.image}`}
                     alt={product.name}
                     className="w-full h-64 object-contain bg-gray-50 dark:bg-gray-700 group-hover:scale-110 transition-transform duration-500 p-4"
                     onError={(e) => {

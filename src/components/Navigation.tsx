@@ -3,6 +3,8 @@ import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { Menu, X, Home, User, LogOut, Settings, ShoppingBag, Heart } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
 
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
+
 export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
@@ -27,7 +29,7 @@ export function Navigation() {
       if (storedUser && token) {
         try {
           // Validate token with server
-          const response = await fetch('/api/auth/verify', {
+          const response = await fetch(`${API_BASE_URL}/api/auth/verify`, {
             method: 'GET',
             headers: {
               'Authorization': `Bearer ${token}`
@@ -45,8 +47,10 @@ export function Navigation() {
           }
         } catch (error) {
           console.error('Token validation error:', error);
-          // On network error, still use stored user data
-          setUser(JSON.parse(storedUser));
+          // For security, clear authentication on network errors
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
+          setUser(null);
         }
       }
     };
