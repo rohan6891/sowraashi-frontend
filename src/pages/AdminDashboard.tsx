@@ -124,7 +124,6 @@ const AdminDashboard: React.FC = () => {
   const sizes = ['XS', 'S', 'M', 'L', 'XL', 'XXL', 'Free Size'];
 
   useEffect(() => {
-    console.log(API_BASE_URL);
     fetchProducts();
     fetchOrders();
   }, []);
