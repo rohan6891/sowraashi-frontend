@@ -566,7 +566,7 @@ const AdminDashboard: React.FC = () => {
                           {imagePreview && (
                             <div className="w-20 h-20 border border-gray-300 rounded-md overflow-hidden">
                               <img
-                                src={imagePreview.startsWith('http') || imagePreview.startsWith('/uploads') ? (imagePreview.startsWith('http') ? imagePreview : `${API_BASE_URL}${imagePreview}`) : imagePreview}
+                                src={imagePreview}
                                 alt="Preview"
                                 className="w-full h-full object-cover"
                               />
@@ -883,7 +883,7 @@ const AdminDashboard: React.FC = () => {
                           <div className="flex items-center">
                             <div className="w-12 h-12 rounded-md overflow-hidden mr-4">
                               <img
-                                src={product.image.startsWith('/uploads/') ? `${API_BASE_URL}${product.image}` : product.image}
+                                src={product.image}
                                 alt={product.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {

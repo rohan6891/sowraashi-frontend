@@ -67,7 +67,7 @@ export function ProductDetail() {
         id: adminProduct._id,
         name: adminProduct.name,
         category: adminProduct.category as any,
-        image: `${API_BASE_URL}${adminProduct.image}`,
+        image: adminProduct.image,
         shortDescription: adminProduct.shortDescription,
         fullDescription: adminProduct.fullDescription,
         features: adminProduct.features,
@@ -179,16 +179,7 @@ export function ProductDetail() {
               </div>
             </div>
 
-            {/* Health Check Button */}
-            <div className="pt-4">
-              <Link
-                to="/contact"
-                className="inline-flex items-center px-6 py-3 bg-gradient-to-r from-green-600 to-green-700 hover:from-green-700 hover:to-green-800 text-white font-medium rounded-lg shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105"
-              >
-                <Shield className="w-5 h-5 mr-2" />
-                Health Check
-              </Link>
-            </div>
+
 
 
           </motion.div>
