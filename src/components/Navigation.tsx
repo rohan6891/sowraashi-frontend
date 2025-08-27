@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { Menu, X, Home, User, LogOut, Settings, ShoppingBag } from 'lucide-react';
+import { Menu, X, Home, User, LogOut, Settings as SettingsIcon, ShoppingBag } from 'lucide-react';
 import { motion, AnimatePresence } from 'framer-motion';
+import SettingsModal from './Settings'; // Import your modal component (adjust path if needed)
 
 const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
@@ -9,6 +10,7 @@ export function Navigation() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [user, setUser] = useState<any>(null);
+  const [showSettingsModal, setShowSettingsModal] = useState(false);
   const location = useLocation();
   const navigate = useNavigate();
 
@@ -159,13 +161,23 @@ export function Navigation() {
           <div className="flex items-center space-x-4">
             {user ? (
               <>
+                {/* Settings Button for Admin */}
+                {user.role === 'admin' && (
+                  <button
+                    onClick={() => setShowSettingsModal(true)}
+                    className="relative p-2 rounded-lg transition-all duration-200 text-gray-300 hover:text-white hover:bg-white/10"
+                    title="Settings"
+                  >
+                    <SettingsIcon className="w-5 h-5" />
+                  </button>
+                )}
                 {getDashboardLink() && (
                   <Link
                     to={getDashboardLink()!}
                     className="relative p-2 rounded-lg transition-all duration-200 text-gray-300 hover:text-white hover:bg-white/10"
                     title={`${user.role} Dashboard`}
                   >
-                    {user.role === 'admin' ? <Settings className="w-5 h-5" /> : <ShoppingBag className="w-5 h-5" />}
+                    {user.role === 'designer' ? <ShoppingBag className="w-5 h-5" /> : null}
                   </Link>
                 )}
                 <Link
@@ -271,7 +283,7 @@ export function Navigation() {
                           to={getDashboardLink()!}
                           className="flex items-center space-x-2 px-3 py-2 font-medium transition-all duration-200 text-gray-300 hover:text-white"
                         >
-                          {user.role === 'admin' ? <Settings className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
+                          {user.role === 'admin' ? <SettingsIcon className="w-4 h-4" /> : <ShoppingBag className="w-4 h-4" />}
                           <span>{user.role} Dashboard</span>
                         </Link>
                       </motion.div>
@@ -327,7 +339,10 @@ export function Navigation() {
         </AnimatePresence>
       </motion.div>
 
-
+      {/* Settings Modal */}
+      {showSettingsModal && (
+        <SettingsModal onClose={() => setShowSettingsModal(false)} />
+      )}
     </div>
   );
 }

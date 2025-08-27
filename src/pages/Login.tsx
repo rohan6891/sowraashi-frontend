@@ -55,6 +55,7 @@ const Login: React.FC = () => {
         // Store token and user info
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', JSON.stringify(data.user));
+        window.dispatchEvent(new Event("authChanged"));
 
         // Redirect based on role
         if (data.user.role === 'admin') {

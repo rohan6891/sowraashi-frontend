@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Upload, X, Edit, Trash2, Eye, Settings as SettingsIcon } from 'lucide-react';
+import { Upload, X, Edit, Trash2, Eye } from 'lucide-react';
 import { products as existingProducts } from '../data/products';
 import Settings from '../components/Settings';
 
@@ -96,7 +96,8 @@ const AdminDashboard: React.FC = () => {
   const [showQRCode, setShowQRCode] = useState(false);
   const [currentQROrder, setCurrentQROrder] = useState<Order | null>(null);
   const [showSettings, setShowSettings] = useState(false);
-  
+  const [authStatus, setAuthStatus] = useState(false);
+
   const [productFormData, setProductFormData] = useState<ProductFormData>({
     name: '',
     category: 'silk',
@@ -127,6 +128,11 @@ const AdminDashboard: React.FC = () => {
     fetchProducts();
     fetchOrders();
   }, []);
+
+
+  useEffect(() =>{
+
+  }, [authStatus]);
 
   const fetchProducts = async () => {
     try {
@@ -474,12 +480,14 @@ const AdminDashboard: React.FC = () => {
       <div className="max-w-7xl mx-auto">
         <div className="flex justify-between items-center mb-8">
           <h1 className="text-3xl font-bold text-white">Admin Dashboard</h1>
+          {/* Settings functionality: open modal, but no icon shown in header */}
           <button
             onClick={() => setShowSettings(true)}
             className="p-2 text-gray-400 hover:text-white hover:bg-gray-800 rounded-lg transition-colors"
             title="Settings"
+            style={{ display: 'none' }}
           >
-            <SettingsIcon className="w-6 h-6" />
+            Settings
           </button>
         </div>
         
