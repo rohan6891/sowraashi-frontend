@@ -883,7 +883,7 @@ const AdminDashboard: React.FC = () => {
                           <div className="flex items-center">
                             <div className="w-12 h-12 rounded-md overflow-hidden mr-4">
                               <img
-                                src={product.image.startsWith('/uploads/') ? `${API_BASE_URL}${product.image}` : product.image}
+                                src={`${API_BASE_URL}${product.image}`}
                                 alt={product.name}
                                 className="w-full h-full object-cover"
                                 onError={(e) => {
