@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowLeft, Download, Star, Shield, Leaf, CheckCircle, Info } from 'lucide-react';
 import { products } from '../data/products';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface AdminProduct {
   _id: string;
@@ -57,11 +58,11 @@ export function ProductDetail() {
   // First try to find in static products
   let product = products.find(p => p.id === id);
   
+  
   // If not found in static products, try to find in admin products
   if (!product && !loading) {
     const adminProduct = adminProducts.find(p => p._id === id);
     if (adminProduct) {
-      const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
       // Convert admin product to match the expected product format
       product = {
         id: adminProduct._id,
@@ -133,7 +134,7 @@ export function ProductDetail() {
           >
             <div className="relative">
               <img
-                src={product.image}
+                src={`${API_BASE_URL}${product.image}`}
                 alt={product.name}
                 className="w-full h-[500px] object-contain bg-white dark:bg-slate-800 rounded-2xl shadow-lg p-4"
               />
