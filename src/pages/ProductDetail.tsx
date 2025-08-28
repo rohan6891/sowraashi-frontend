@@ -57,7 +57,8 @@ export function ProductDetail() {
   
   // First try to find in static products
   let product = products.find(p => p.id === id);
-  
+  console.log(product);
+  console.log(product?.image);
   
   // If not found in static products, try to find in admin products
   if (!product && !loading) {
