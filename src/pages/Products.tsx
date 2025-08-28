@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { ArrowRight, ChevronRight, Heart } from 'lucide-react';
 import { products } from '../data/products';
+const API_BASE_URL = import.meta.env.VITE_BACKEND_URL;
 
 interface AdminProduct {
   _id: string;
@@ -221,7 +222,7 @@ export function Products() {
                 
                 {/* Product Image */}
                 <img
-                  src={currentProduct.image}
+                  src={`${API_BASE_URL}${currentProduct.image}`}
                   alt={currentProduct.name}
                   className="relative z-10 w-80 h-80 object-contain drop-shadow-2xl"
                 />
@@ -229,7 +230,7 @@ export function Products() {
                 {/* Reflection Effect */}
                 <div className="absolute bottom-0 left-1/2 transform -translate-x-1/2 w-80 h-40 opacity-20">
                   <img
-                    src={currentProduct.image}
+                  src={`${API_BASE_URL}${currentProduct.image}`}
                     alt=""
                     className="w-full h-full object-contain transform scale-y-[-1] blur-sm"
                   />
@@ -271,7 +272,7 @@ export function Products() {
                 <div className="flex items-center space-x-4 mb-4">
                   <div className="w-16 h-16 bg-white/10 rounded-xl flex items-center justify-center">
                     <img
-                      src={currentProduct.image}
+                      src={`${API_BASE_URL}${currentProduct.image}`}
                       alt={currentProduct.name}
                       className="w-12 h-12 object-contain"
                     />
@@ -348,7 +349,7 @@ export function Products() {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={product.image}
+                    src={`${API_BASE_URL}${product.image}`}
                     alt={product.name}
                     className="w-full h-64 object-contain bg-gray-50 dark:bg-gray-700 group-hover:scale-110 transition-transform duration-500 p-4"
                     onError={(e) => {
