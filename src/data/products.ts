@@ -23,7 +23,7 @@ export const products: Product[] = [
     id: 'silk-saree-1',
     name: 'Premium Silk Saree',
     category: 'silk',
-    image: `${API_BASE_URL}/uploads/1.png`,
+    image: '/uploads/1.png',
     shortDescription: 'Elegant silk saree with traditional patterns and rich colors',
     fullDescription: `PREMIUM SILK SAREE COLLECTION:
 Exquisite handwoven silk saree featuring traditional motifs and vibrant colors. Perfect for special occasions and celebrations. Made from pure silk with intricate border designs and matching blouse piece.
@@ -46,7 +46,7 @@ FEATURES:
     id: 'designer-saree-2',
     name: 'Designer Collection Saree',
     category: 'designer',
-    image: `${API_BASE_URL}/uploads/2.png`,
+    image: '/uploads/2.png',
     shortDescription: 'Contemporary designer saree with modern patterns and elegant finish',
     fullDescription: `DESIGNER COLLECTION SAREE:
 Stunning designer saree crafted with modern aesthetics and contemporary patterns. Features unique color combinations and innovative design elements. Perfect for parties and social gatherings.
@@ -69,7 +69,7 @@ FEATURES:
     id: 'bridal-saree-3',
     name: 'Bridal Special Saree',
     category: 'bridal',
-    image: `${API_BASE_URL}/uploads/3.png`,
+    image: '/uploads/3.png',
     shortDescription: 'Luxurious bridal saree with heavy embroidery and golden work',
     fullDescription: `BRIDAL SPECIAL SAREE:
 Magnificent bridal saree designed for your most special day. Features heavy embroidery work, golden threads, and luxurious fabric. Comes with matching accessories and designer blouse.
@@ -92,7 +92,7 @@ FEATURES:
     id: 'cotton-saree-4',
     name: 'Pure Cotton Saree',
     category: 'cotton',
-    image: `${API_BASE_URL}/uploads/4.png`,
+    image: '/uploads/4.png',
     shortDescription: 'Comfortable cotton saree perfect for daily wear and casual occasions',
     fullDescription: `PURE COTTON SAREE:
 Comfortable and breathable cotton saree ideal for daily wear. Features simple yet elegant patterns with soft colors. Perfect for office wear and casual occasions.
@@ -115,7 +115,7 @@ FEATURES:
     id: 'party-saree-5',
     name: 'Party Wear Saree',
     category: 'party',
-    image: `${API_BASE_URL}/uploads/5.png`,
+    image: '/uploads/5.png',
     shortDescription: 'Glamorous party wear saree with shimmer and contemporary design',
     fullDescription: `PARTY WEAR SAREE:
 Glamorous saree designed for parties and social events. Features shimmer work, contemporary patterns, and vibrant colors. Perfect for making a style statement.
@@ -138,7 +138,7 @@ FEATURES:
     id: 'casual-saree-6',
     name: 'Casual Elegant Saree',
     category: 'casual',
-    image: `${API_BASE_URL}/uploads/6.png`,
+    image: '/uploads/6.png',
     shortDescription: 'Elegant casual saree suitable for various occasions and comfortable wear',
     fullDescription: `CASUAL ELEGANT SAREE:
 Versatile saree perfect for various occasions. Combines comfort with elegance, featuring subtle patterns and pleasant colors. Ideal for both casual and semi-formal events.

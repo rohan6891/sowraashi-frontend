@@ -566,7 +566,7 @@ const AdminDashboard: React.FC = () => {
                           {imagePreview && (
                             <div className="w-20 h-20 border border-gray-300 rounded-md overflow-hidden">
                               <img
-                                src={imagePreview.startsWith('http') || imagePreview.startsWith('/uploads') ? (imagePreview.startsWith('http') ? imagePreview : `${API_BASE_URL}${imagePreview}`) : imagePreview}
+                                src={imagePreview}
                                 alt="Preview"
                                 className="w-full h-full object-cover"
                               />

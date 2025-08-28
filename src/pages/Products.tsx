@@ -78,7 +78,7 @@ export function Products() {
       id: adminProduct._id,
       name: adminProduct.name,
       category: adminProduct.category as any,
-      image: `${API_BASE_URL}${adminProduct.image}`,
+      image: adminProduct.image,
       shortDescription: adminProduct.shortDescription,
       fullDescription: adminProduct.fullDescription,
       features: adminProduct.features,
@@ -137,15 +137,7 @@ export function Products() {
     >
       <div className="max-w-7xl mx-auto px-4 py-12">
         
-        {/* Top Navigation */}
-        <div className="flex items-center justify-end mb-12">
-          <Link
-            to="/contact"
-            className="border border-white/50 text-white px-6 py-2 rounded-lg hover:bg-white/10 transition-colors font-medium"
-          >
-            Health Check
-          </Link>
-        </div>
+
 
         {/* Main Content Grid */}
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-12 items-center min-h-[600px]">
@@ -187,10 +179,7 @@ export function Products() {
                   <h4 className="text-white/60 text-sm mb-1">Category</h4>
                   <p className="text-white font-medium capitalize">{currentProduct.category}</p>
                 </div>
-                <div>
-                  <h4 className="text-white/60 text-sm mb-1">Application</h4>
-                  <p className="text-white font-medium">All Crops</p>
-                </div>
+
                 <div>
                   <h4 className="text-white/60 text-sm mb-1">Availability</h4>
                   <p className={`font-medium ${currentProduct.inStock ? 'text-green-400' : 'text-red-400'}`}>
@@ -359,7 +348,7 @@ export function Products() {
               >
                 <div className="relative overflow-hidden">
                   <img
-                    src={product.image.startsWith('http') ? product.image : `${import.meta.env.VITE_BACKEND_URL}${product.image}`}
+                    src={product.image}
                     alt={product.name}
                     className="w-full h-64 object-contain bg-gray-50 dark:bg-gray-700 group-hover:scale-110 transition-transform duration-500 p-4"
                     onError={(e) => {
