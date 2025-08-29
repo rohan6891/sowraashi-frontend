@@ -1,9 +1,11 @@
 import { motion } from 'framer-motion';
 import { Crown, Sparkles, Heart, Palette, Star, Gem } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 import { ProductShowcase } from '../components/ProductShowcase';
 import '../assets/background.css';
 
 export function Homepage() {
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -136,6 +138,7 @@ export function Homepage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate('/products')}
                   className="px-8 py-4 bg-white text-black rounded-full font-semibold text-lg hover:bg-gray-200 transition-colors duration-300"
                 >
                   Explore
@@ -143,6 +146,7 @@ export function Homepage() {
                 <motion.button
                   whileHover={{ scale: 1.05 }}
                   whileTap={{ scale: 0.95 }}
+                  onClick={() => navigate('/workshop')}
                   className="px-8 py-4 bg-amber-600 text-white rounded-full font-semibold text-lg hover:bg-amber-700 transition-colors duration-300"
                 >
                   Custom Designer
