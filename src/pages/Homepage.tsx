@@ -177,7 +177,7 @@ export function Homepage() {
                 <img 
                   src="/uploads/9.png" 
                   alt="Collection 2" 
-                  className="w-full h-80 object-cover rounded-2xl"
+                  className="w-full h-96 object-contain rounded-2xl"
                 />
                 
                 {/* Floating Elements */}
